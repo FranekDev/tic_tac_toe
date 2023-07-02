@@ -91,6 +91,9 @@ const GameController = (() => {
                 gameResults();
                 return signA;
             }
+            else {
+                resultMessage.textContent = 'Draw';
+            }
         });
 
     };
