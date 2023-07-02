@@ -11,6 +11,9 @@ const Player = (move) => {
 const GameBoard = (() => {
 
     const gameField = document.querySelectorAll('.field');
+    const playerMove = document.querySelector('.player_move');
+
+    playerMove.textContent = 'X\'s turn';
 
     let board = [Player(''),Player(''),Player(''),Player(''),Player(''),Player(''),Player(''),Player(''),Player('')];
 
@@ -30,11 +33,13 @@ const GameBoard = (() => {
                 field.textContent = player1.getMove();
                 wasX = true;
                 board[index] = player1;
+                playerMove.textContent = 'O\'s turn';
             }
             else if (wasX && field.textContent === '') {
                 field.textContent = player2.getMove();
                 wasX = false;
                 board[index] = player2;
+                playerMove.textContent = 'X\'s turn';
             }
             GameController.checkWinner();
         });
@@ -46,6 +51,7 @@ const GameBoard = (() => {
             board[index] = Player('');
         });
 
+        playerMove.textContent = 'X\'s turn';
         wasX = false;
     };
 
@@ -54,7 +60,11 @@ const GameBoard = (() => {
 
 const GameController = (() => {
 
+    let isGameFinished = false;
+
     const checkWinner = () => {
+
+        const resultMessage = document.querySelector('.result');
 
         const winCases = [
             [0, 1, 2],
@@ -69,14 +79,16 @@ const GameController = (() => {
 
         winCases.forEach((winCase) => {
             const [posA, posB, posC] = winCase;
-            
+
             const signA = GameBoard.board[posA].getMove();
             const signB = GameBoard.board[posB].getMove();
             const signC = GameBoard.board[posC].getMove();
 
             if (signA !== '' && signA === signB && signB === signC) {
                 console.log('Winner: ' + signA);
-                alert('Winner: ' + signA);
+                resultMessage.textContent = 'Winner: ' + signA;
+                isGameFinished = true;
+                gameResults();
                 return signA;
             }
         });
@@ -94,6 +106,24 @@ const GameController = (() => {
         GameController.resetGame();
     });
 
-    return { resetGame, checkWinner };
+    const gameResults = () => {
+        const endGameScreen = document.querySelector('.game_result');
+        const boardField = document.querySelector('.game');
+        const newGame = document.querySelector('.new_game button');
+
+        if(isGameFinished) {
+            endGameScreen.style.display = 'flex';
+            boardField.style.display = 'none';
+        }
+
+        newGame.addEventListener('click', () => {
+            endGameScreen.style.display = 'none';
+            boardField.style.display = 'flex';
+            GameController.resetGame();
+        });
+
+    };
+
+    return { resetGame, checkWinner, gameResults };
 
 })();

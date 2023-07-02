@@ -19,13 +19,29 @@ body {
     justify-content: space-between;
     min-height: 100vh;
     min-width: 100vw;
+    color: var(--secondary-color);
+}
+
+.game_result {
+    width: 300px;
+    height: 300px;
+    border: 5px solid var(--secondary-color);
+    border-radius: 25px;
+    position: absolute;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 30px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
 }
 
 .header {
     width: 100%;
     height: 100px;
     background-color: var(--primary-color);
-    color: var(--secondary-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,6 +56,10 @@ body {
     gap: 20px;
 }
 
+.player_move {
+    font-size: 30px;
+}
+
 .gameBoard {
     width: 400px;
     height: 400px;
@@ -48,7 +68,6 @@ body {
     grid-template-rows: repeat(3, 1fr);
     margin: 0 auto;
     margin-top: 50px;
-    color: var(--secondary-color);
 }
 
 .field {
@@ -69,8 +88,7 @@ body {
     border-right: 5px solid var(--secondary-color);
 }
 
-
-.resetBtn > button {
+.resetBtn > button, .new_game > button {
     background-color: var(--primary-color);
     border: 3px solid var(--secondary-color);
     width: 100px;
@@ -81,18 +99,14 @@ body {
     cursor: pointer;
 }
 
-.resetBtn > button:hover {
+.resetBtn > button:hover, .new_game > button:hover {
     background-color: var(--secondary-color);
     color: var(--primary-color);
 }
 
 footer {
     justify-self: flex-end;
-    /* color: var(--secondary-color); */
     color: #00ffbf81;
-}
-
-footer {
     min-height: 5vh;
     display: flex;
     align-items: center;
