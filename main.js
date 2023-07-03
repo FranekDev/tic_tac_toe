@@ -77,6 +77,9 @@ const GameController = (() => {
             [2, 4, 6] 
         ];
 
+        let isWinner = false;
+        let winner = '';
+
         winCases.forEach((winCase) => {
             const [posA, posB, posC] = winCase;
 
@@ -84,15 +87,28 @@ const GameController = (() => {
             const signB = GameBoard.board[posB].getMove();
             const signC = GameBoard.board[posC].getMove();
 
+            
             if (signA !== '' && signA === signB && signB === signC) {
-                console.log('Winner: ' + signA);
                 resultMessage.textContent = 'Winner: ' + signA;
                 isGameFinished = true;
                 gameResults();
+                isWinner = true;
+                winner = signA;
                 return signA;
             }
-            else {
+                
+            const isDraw = GameBoard.board.every((field) => {
+                if(field.getMove() != '' && !isWinner) {
+                    return true;
+                }
+            });
+
+            if(isDraw) {
                 resultMessage.textContent = 'Draw';
+                isGameFinished = true;
+                gameResults();
+                isWinner = false;
+                return;
             }
         });
 
